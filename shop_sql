@@ -1,3 +1,6 @@
 INSERT INTO products (name, description, price) VALUES ('Product1', 'Description1', 10.00);
 INSERT INTO products (name, description, price) VALUES ('Product2', 'Description2', 20.00);
 INSERT INTO products (name, description, price) VALUES ('Product3', 'Description3', 30.00);
+
+INSERT INTO users (username, password) VALUES ('admin', 'admin');
+INSERT INTO users (username, password) VALUES ('user', 'user');
