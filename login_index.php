@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 $loginMessage = '';
 $registerMessage = '';
 $sqlQuery = '';
+$errorMessage = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $user = $_POST['username'];
@@ -24,10 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $sqlQuery = "SELECT * FROM users WHERE username='$user' AND password='$pass'";
     $result = $conn->query($sqlQuery);
 
-    if ($result->num_rows > 0) {
-        $loginMessage = "Login successful!";
+    if ($result) {
+        if ($result->num_rows > 0) {
+            $loginMessage = "Login successful!";
+        } else {
+            $loginMessage = "Invalid username or password.";
+        }
     } else {
-        $loginMessage = "Invalid username or password.";
+        $errorMessage = "Error: " . $conn->error;
     }
 }
 
@@ -40,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     if ($conn->query($sqlQuery) === TRUE) {
         $registerMessage = "Registration successful!";
     } else {
-        $registerMessage = "Error: " . $sqlQuery . "<br>" . $conn->error;
+        $registerMessage = "Error: " . $conn->error;
     }
 }
 
@@ -71,5 +76,7 @@ $conn->close();
 
     <h2>Operation Details</h2>
     <p>Last SQL Query: <?php echo $sqlQuery; ?></p>
+    <p>Error Message: <?php echo $errorMessage; ?></p>
 </body>
 </html>
+
