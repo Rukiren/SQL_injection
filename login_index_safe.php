@@ -4,10 +4,10 @@ $username = "root";
 $password = "";
 $dbname = "testdb";
 
-// 创建连接
+// 連線資料庫
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// 检查连接
+// 檢查連線
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -17,18 +17,19 @@ $registerMessage = '';
 $sqlQuery = '';
 $errorMessage = '';
 
-// 用户登录
+// 用戶登入
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $user = $_POST['username'];
     $pass = $_POST['password'];
 
-    // 使用准备语句防止 SQL 注入
+    // 使用準備指令防止 SQL Injection
     $stmt = $conn->prepare("SELECT password FROM users WHERE username=?");
     $stmt->bind_param("s", $user);
     $stmt->execute();
     $stmt->bind_result($hashedPass);
     $stmt->fetch();
 
+    // 用 password_veritify 驗證 Hash 密碼
     if ($hashedPass && password_verify($pass, $hashedPass)) {
         $loginMessage = "Login successful!";
     } else {
@@ -38,15 +39,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $stmt->close();
 }
 
-// 用户注册
+// 註冊
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $newUser = $_POST['new_username'];
     $newPass = $_POST['new_password'];
 
-    // 对密码进行哈希处理
+    // 將密碼進行 hash 處理
     $hashedPass = password_hash($newPass, PASSWORD_BCRYPT);
 
-    // 使用准备语句防止 SQL 注入
+    // 使用準備語句防止被 SQL Injection
     $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
     $stmt->bind_param("ss", $newUser, $hashedPass);
 
